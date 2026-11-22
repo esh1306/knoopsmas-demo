@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Knoopsmas · A gift for our loyal Knoopologist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cocoa:#2a1d14;      /* near-black chocolate */
+    --cocoa-2:#3c2a1c;
+    --espresso:#1b120c;
+    --cream:#f5ece0;      /* warm cream */
+    --cream-2:#efe3d2;
+    --milk:#fbf6ee;
+    --gold:#c9a24b;
+    --gold-soft:#e3c884;
+    --red:#8c2b22;        /* candy-cane / festive */
+    --mint:#5d8f74;
+    --ink:#241912;
+    --serif:'Fraunces', Georgia, serif;
+    --sans:'Jost', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:var(--sans);
+    color:var(--cream);
+    background:radial-gradient(130% 110% at 50% -10%, #3a281b 0%, #241710 45%, #150d08 100%);
+    min-height:100dvh;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* falling gold dust / snow */
+  .flakes{position:fixed;inset:0;pointer-events:none;z-index:1;}
+  .flake{position:absolute;top:-16px;border-radius:50%;opacity:0;animation:fall linear infinite;}
+  @keyframes fall{
+    0%{transform:translateY(-20px) translateX(0);opacity:0;}
+    10%{opacity:.9;}
+    90%{opacity:.9;}
+    100%{transform:translateY(105dvh) translateX(var(--drift));opacity:0;}
+  }
+
+  .stage{position:relative;z-index:2;max-width:560px;margin:0 auto;padding:0 20px;min-height:100dvh;display:flex;flex-direction:column;}
+  .screen{display:none;flex:1;flex-direction:column;justify-content:center;padding:34px 0 40px;}
+  .screen.on{display:flex;animation:rise .7s cubic-bezier(.2,.8,.2,1) both;}
+  @keyframes rise{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+
+  .brandbar{display:flex;align-items:center;justify-content:space-between;padding:18px 0 4px;}
+  .wordmark{font-family:var(--sans);font-weight:600;letter-spacing:.34em;font-size:.86rem;text-transform:uppercase;color:var(--cream);}
+  .wordmark b{color:var(--gold);}
+  .store{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,236,224,.55);}
+
+  /* ---------- SCREEN 1 : CARD ---------- */
+  .eyebrow{font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;color:var(--gold-soft);text-align:center;margin-bottom:16px;}
+  .card{
+    background:linear-gradient(180deg, var(--milk) 0%, var(--cream-2) 100%);
+    color:var(--ink);
+    border-radius:22px;
+    padding:30px 26px 32px;
+    box-shadow:0 30px 70px rgba(0,0,0,.5), inset 0 0 0 1px rgba(201,162,75,.4);
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before{content:'';position:absolute;inset:9px;border:1px solid rgba(201,162,75,.45);border-radius:15px;pointer-events:none;}
+  .card h1{font-family:var(--serif);font-weight:400;font-size:clamp(1.9rem,7vw,2.5rem);line-height:1.08;text-align:center;margin:6px 0 4px;color:var(--cocoa);}
+  .card h1 em{font-style:italic;color:var(--red);}
+  .salute{text-align:center;font-family:var(--serif);font-style:italic;font-size:1.05rem;color:var(--gold);margin-bottom:18px;}
+  .card p.body{text-align:center;font-size:1rem;line-height:1.65;color:#4a382a;max-width:40ch;margin:0 auto 10px;}
+  .signoff{text-align:center;font-family:var(--serif);font-style:italic;color:#6a5236;margin-top:14px;font-size:.96rem;}
+
+  /* the cup illustration */
+  .cupwrap{display:flex;justify-content:center;margin:14px 0 20px;}
+  .cup-illo{width:170px;height:200px;}
+  @keyframes steam{0%{opacity:0;transform:translateY(6px) scaleX(1);}40%{opacity:.6;}100%{opacity:0;transform:translateY(-26px) scaleX(1.5);}}
+  .st{transform-origin:center;animation:steam 3.4s ease-in-out infinite;}
+  .st2{animation-delay:1.1s;}
+  .st3{animation-delay:2.2s;}
+
+  .cta{display:block;width:100%;margin-top:22px;border:none;cursor:pointer;
+    background:linear-gradient(180deg,#3c2a1c,#241710);color:var(--cream);
+    font-family:var(--sans);font-weight:500;letter-spacing:.1em;text-transform:uppercase;font-size:.84rem;
+    padding:17px;border-radius:13px;box-shadow:0 12px 26px rgba(0,0,0,.45),inset 0 0 0 1px rgba(227,200,132,.5);
+    transition:transform .15s ease, box-shadow .15s ease;}
+  .cta:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(0,0,0,.5),inset 0 0 0 1px rgba(227,200,132,.8);}
+  .cta .sm{display:block;font-size:.66rem;letter-spacing:.2em;color:var(--gold-soft);margin-top:4px;font-weight:400;}
+  .fineprint{text-align:center;font-size:.72rem;letter-spacing:.06em;color:rgba(245,236,224,.5);margin-top:16px;}
+
+  /* ---------- SCREEN 2 : GAME ---------- */
+  .ghead{text-align:center;margin-bottom:12px;}
+  .ghead h2{font-family:var(--serif);font-weight:500;font-size:1.6rem;color:var(--cream);}
+  .ghead p{font-size:.86rem;color:rgba(245,236,224,.7);margin-top:4px;}
+  .hud{display:flex;gap:8px;margin-bottom:10px;}
+  .stat{flex:1;background:rgba(0,0,0,.28);border:1px solid rgba(201,162,75,.3);border-radius:11px;padding:8px 6px;text-align:center;}
+  .stat .n{font-family:var(--serif);font-size:1.35rem;color:var(--gold-soft);line-height:1;}
+  .stat .l{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(245,236,224,.55);margin-top:4px;}
+
+  .canvaswrap{position:relative;background:linear-gradient(180deg,#241710,#160e08);border-radius:16px;overflow:hidden;border:1px solid rgba(201,162,75,.25);box-shadow:inset 0 2px 30px rgba(0,0,0,.6);}
+  #game{display:block;width:100%;touch-action:none;}
+  .toast{position:absolute;top:14px;left:50%;transform:translateX(-50%) translateY(-8px);opacity:0;background:rgba(20,12,7,.9);border:1px solid var(--gold);color:var(--gold-soft);padding:7px 16px;border-radius:999px;font-weight:500;font-size:.9rem;letter-spacing:.04em;transition:all .25s ease;white-space:nowrap;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .hint{position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:.78rem;color:rgba(245,236,224,.6);pointer-events:none;}
+
+  .startbtn{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:rgba(15,9,5,.55);backdrop-filter:blur(2px);cursor:pointer;z-index:4;}
+  .startbtn .play{width:76px;height:76px;border-radius:50%;background:linear-gradient(180deg,var(--gold-soft),var(--gold));display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.5);}
+  .startbtn .play svg{margin-left:4px;}
+  .startbtn .lbl{font-family:var(--serif);font-size:1.2rem;color:var(--cream);}
+  .startbtn .sub{font-size:.78rem;color:rgba(245,236,224,.7);max-width:30ch;text-align:center;}
+
+  /* reward meter */
+  .meter{margin-top:14px;}
+  .meter .track{height:12px;border-radius:999px;background:rgba(0,0,0,.35);overflow:hidden;border:1px solid rgba(201,162,75,.3);}
+  .meter .fill{height:100%;width:0;background:linear-gradient(90deg,var(--mint),var(--gold-soft),var(--gold));transition:width .4s ease;}
+  .tiers{display:flex;justify-content:space-between;margin-top:8px;gap:6px;}
+  .tier{flex:1;text-align:center;padding:9px 6px;border-radius:11px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.07);opacity:.5;transition:all .3s ease;}
+  .tier.live{opacity:1;border-color:var(--gold);background:rgba(201,162,75,.12);box-shadow:0 6px 18px rgba(0,0,0,.35);}
+  .tier .pts{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-soft);}
+  .tier .what{font-size:.78rem;color:var(--cream);margin-top:3px;line-height:1.3;}
+
+  /* leaderboard */
+  .board{margin-top:16px;background:rgba(0,0,0,.25);border:1px solid rgba(201,162,75,.25);border-radius:14px;padding:14px 16px;}
+  .board h3{font-family:var(--serif);font-weight:500;font-size:1rem;color:var(--gold-soft);margin-bottom:10px;display:flex;justify-content:space-between;align-items:baseline;}
+  .board h3 span{font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,236,224,.45);font-family:var(--sans);}
+  .row{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:.9rem;border-bottom:1px solid rgba(255,255,255,.05);}
+  .row:last-child{border-bottom:none;}
+  .row .rk{width:22px;color:var(--gold-soft);font-family:var(--serif);}
+  .row .nm{flex:1;color:var(--cream);}
+  .row .sc{font-family:var(--serif);color:var(--gold-soft);}
+  .row.you{background:rgba(201,162,75,.12);border-radius:8px;padding:6px 8px;margin:2px -8px;}
+  .row.you .nm{color:#fff;font-weight:500;}
+  .challenge{display:block;width:100%;margin-top:12px;border:1px dashed var(--gold);background:transparent;color:var(--gold-soft);padding:12px;border-radius:11px;font-family:var(--sans);font-size:.82rem;letter-spacing:.04em;cursor:pointer;transition:all .2s ease;}
+  .challenge:hover{background:rgba(201,162,75,.12);}
+
+  /* voucher reveal */
+  .voucher{margin-top:16px;display:none;background:linear-gradient(180deg,var(--milk),var(--cream-2));color:var(--ink);border-radius:16px;padding:22px;text-align:center;position:relative;box-shadow:0 20px 50px rgba(0,0,0,.5);}
+  .voucher.on{display:block;animation:rise .6s both;}
+  .voucher::before{content:'';position:absolute;inset:8px;border:1px dashed rgba(201,162,75,.6);border-radius:10px;}
+  .voucher .vk{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--red);}
+  .voucher h3{font-family:var(--serif);font-size:1.5rem;color:var(--cocoa);margin:6px 0;}
+  .voucher p{color:#5a4634;font-size:.92rem;}
+  .voucher .code{display:inline-block;margin-top:12px;font-family:var(--serif);letter-spacing:.14em;background:var(--cocoa);color:var(--gold-soft);padding:8px 18px;border-radius:8px;font-size:1.1rem;}
+  .voucher small{display:block;margin-top:10px;color:#8a6f52;font-size:.72rem;}
+
+  .back{display:block;text-align:center;margin-top:20px;color:rgba(245,236,224,.5);font-size:.78rem;letter-spacing:.08em;text-decoration:none;}
+  .back:hover{color:var(--gold-soft);}
+
+  .mute{position:fixed;top:14px;right:14px;z-index:30;background:rgba(0,0,0,.4);border:1px solid rgba(201,162,75,.4);color:var(--gold-soft);border-radius:999px;width:38px;height:38px;cursor:pointer;font-size:.9rem;}
+
+  /* demo switcher (hidden with ?clean=1) */
+  .demobar{position:fixed;bottom:0;left:0;right:0;z-index:40;background:rgba(15,9,5,.92);border-top:1px solid rgba(201,162,75,.3);padding:8px 10px;display:flex;gap:6px;justify-content:center;align-items:center;font-size:.72rem;}
+  .demobar span{color:rgba(245,236,224,.5);letter-spacing:.1em;text-transform:uppercase;margin-right:4px;}
+  .demobar a{color:var(--gold-soft);text-decoration:none;border:1px solid rgba(201,162,75,.4);padding:4px 10px;border-radius:999px;}
+</style>
+</head>
+<body>
+<div class="flakes" id="flakes"></div>
+<button class="mute" id="mute" title="Sound">♪</button>
+
+<div class="stage">
+  <div class="brandbar">
+    <div class="wordmark">KN<b>OO</b>PS</div>
+    <div class="store" data-bind="STORE">Cardiff · St David's</div>
+  </div>
+
+  <!-- ====== SCREEN 1 : CARD ====== -->
+  <section class="screen on" id="s1">
+    <div class="eyebrow">Knoopsmas · 2026</div>
+    <div class="card">
+      <div class="cupwrap">
+        <svg class="cup-illo" viewBox="0 0 170 200" aria-hidden="true">
+          <!-- steam -->
+          <g stroke="#cdb089" stroke-width="3" stroke-linecap="round" fill="none" opacity=".7">
+            <path class="st" d="M70 44 q-8 -12 0 -24 q8 -12 0 -24"/>
+            <path class="st st2" d="M88 44 q-8 -12 0 -24 q8 -12 0 -24"/>
+            <path class="st st3" d="M106 44 q-8 -12 0 -24 q8 -12 0 -24"/>
+          </g>
+          <!-- saucer -->
+          <ellipse cx="85" cy="186" rx="64" ry="11" fill="#d9c7ac"/>
+          <ellipse cx="85" cy="183" rx="64" ry="11" fill="#efe3d2"/>
+          <!-- cup body -->
+          <path d="M34 70 L136 70 L126 170 Q125 178 116 178 L54 178 Q45 178 44 170 Z" fill="#fbf6ee" stroke="#c9a24b" stroke-width="2"/>
+          <!-- chocolate -->
+          <path d="M40 92 L130 92 L127 120 Q86 132 43 120 Z" fill="#4a2f1c"/>
+          <ellipse cx="85" cy="92" rx="45" ry="9" fill="#5b3b23"/>
+          <!-- marshmallow -->
+          <rect x="70" y="80" width="30" height="20" rx="7" fill="#fdfaf4" stroke="#e7d6bb" stroke-width="1.5"/>
+          <!-- handle -->
+          <path d="M136 86 Q166 90 160 122 Q156 146 128 142" fill="none" stroke="#c9a24b" stroke-width="7" stroke-linecap="round"/>
+          <!-- % sleeve -->
+          <rect x="42" y="128" width="86" height="30" rx="4" fill="#2a1d14"/>
+          <text x="85" y="149" text-anchor="middle" font-family="Fraunces, serif" font-size="18" fill="#e3c884" letter-spacing="1">65%</text>
+        </svg>
+      </div>
+      <h1>Merry <em>Knoopsmas</em>,<br>from all of us</h1>
+      <p class="salute" data-bind="SALUTE">To our loyal Knoopologist, Sofia —</p>
+      <p class="body">Thank you for every cup this year. The season's turned cosy, the fairy lights are up, and the festive menu is back. Here's a little game — and a treat waiting at the end of it.</p>
+      <p class="signoff">With warmth, the Knoops Cardiff family ✦</p>
+      <button class="cta" id="toGame">
+        Play “Pour-fect Cocoa” for your gift
+        <span class="sm">everyone wins something · 30 seconds</span>
+      </button>
+      <p class="fineprint">A limited-edition Knoopsmas treat · redeem in store before 24 Dec</p>
+    </div>
+    <p class="fineprint" style="margin-top:14px;opacity:.55">Sample campaign built for Knoops — not an official Knoops promotion.</p>
+  </section>
+
+  <!-- ====== SCREEN 2 : GAME ====== -->
+  <section class="screen" id="s2">
+    <div class="ghead">
+      <h2>Pour-fect Cocoa</h2>
+      <p>Hold to pour · release at the golden line · don't let it overflow</p>
+    </div>
+    <div class="hud">
+      <div class="stat"><div class="n" id="hScore">0</div><div class="l">Points</div></div>
+      <div class="stat"><div class="n" id="hCups">0</div><div class="l">Cups served</div></div>
+      <div class="stat"><div class="n" id="hStreak">0</div><div class="l">Streak</div></div>
+      <div class="stat"><div class="n" id="hTime">30</div><div class="l">Seconds</div></div>
+    </div>
+    <div class="canvaswrap">
+      <canvas id="game"></canvas>
+      <div class="toast" id="toast"></div>
+      <div class="hint" id="hint">Press &amp; hold anywhere to pour</div>
+      <div class="startbtn" id="startBtn">
+        <div class="play"><svg width="26" height="30" viewBox="0 0 26 30"><path d="M2 2 L24 15 L2 28 Z" fill="#2a1d14"/></svg></div>
+        <div class="lbl">Tap to start pouring</div>
+        <div class="sub">Serve as many perfect % cups as you can in 30 seconds</div>
+      </div>
+    </div>
+
+    <div class="meter">
+      <div class="track"><div class="fill" id="meterFill"></div></div>
+      <div class="tiers">
+        <div class="tier live" id="t0"><div class="pts">Everyone</div><div class="what">Free giant marshmallow topping</div></div>
+        <div class="tier" id="t1"><div class="pts">120 pts · Silver</div><div class="what">£1 off any Knoopsmas drink + free cream</div></div>
+        <div class="tier" id="t2"><div class="pts">240 pts · Gold</div><div class="what">A free “The Winter Works” — on us</div></div>
+      </div>
+    </div>
+
+    <div class="voucher" id="voucher">
+      <div class="vk">Your Knoopsmas reward</div>
+      <h3 id="vTitle">Free giant marshmallow</h3>
+      <p id="vDesc">Show this to your Knoopologist in store.</p>
+      <div class="code" id="vCode">KNOOP-XMAS</div>
+      <small>Valid at Knoops Cardiff until 24 Dec 2026 · one per customer</small>
+    </div>
+
+    <div class="board">
+      <h3>Knoopsmas Leaderboard <span id="boardSub">St David's · this week</span></h3>
+      <div id="rows"></div>
+      <button class="challenge" id="challenge">Challenge a friend — you both get +30 bonus points →</button>
+    </div>
+
+    <a class="back" id="backLink" href="#">← back to the card</a>
+  </section>
+</div>
+
+<div class="demobar" id="demobar">
+  <span>Demo</span>
+  <a href="?clean=1">Recipient view (clean)</a>
+  <a href="research.html">Strategy brief</a>
+  <a href="snow-globe.html">Original demo</a>
+</div>
+
+<script>
+/* ---------- config / personalisation ---------- */
+const params = new URLSearchParams(location.search);
+const CLEAN = params.get('clean') === '1';
+const CFG = {
+  store: params.get('store') || "Cardiff · St David's",
+  firstName: params.get('name') || 'Sofia',
+};
+document.querySelectorAll('[data-bind="STORE"]').forEach(e=>e.textContent=CFG.store);
+document.querySelector('[data-bind="SALUTE"]').textContent = `To our loyal Knoopologist, ${CFG.firstName} —`;
+document.getElementById('boardSub').textContent = CFG.store.split('·').pop().trim() + ' · this week';
+if(CLEAN){ document.getElementById('demobar').style.display='none'; }
+
+/* ---------- falling gold dust ---------- */
+(function(){
+  const box=document.getElementById('flakes');
+  for(let i=0;i<34;i++){
+    const f=document.createElement('div');f.className='flake';
+    const s=Math.random()*4+2;
+    f.style.width=f.style.height=s+'px';
+    f.style.left=Math.random()*100+'%';
+    f.style.background=Math.random()>.5?'#e3c884':'rgba(255,252,246,.85)';
+    f.style.setProperty('--drift',(Math.random()*60-30)+'px');
+    f.style.animationDuration=(Math.random()*6+6)+'s';
+    f.style.animationDelay=(-Math.random()*10)+'s';
+    box.appendChild(f);
+  }
+})();
+
+/* ---------- tiny celesta (web audio) ---------- */
+let AC=null, muted=false;
+document.getElementById('mute').onclick=function(){muted=!muted;this.textContent=muted?'♪̶':'♪';this.style.opacity=muted?.5:1;};
+function chime(freq,t){
+  if(muted) return;
+  try{
+    AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    const o=AC.createOscillator(),g=AC.createGain();
+    o.type='triangle';o.frequency.value=freq;
+    const n=AC.currentTime+(t||0);
+    g.gain.setValueAtTime(0,n);g.gain.linearRampToValueAtTime(.18,n+.02);
+    g.gain.exponentialRampToValueAtTime(.0001,n+.6);
+    o.connect(g).connect(AC.destination);o.start(n);o.stop(n+.62);
+  }catch(e){}
+}
+function sparkleUp(){chime(1047);chime(1319,.08);chime(1568,.16);}
+function sadPlop(){if(muted)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.setValueAtTime(320,AC.currentTime);o.frequency.exponentialRampToValueAtTime(90,AC.currentTime+.25);g.gain.setValueAtTime(.2,AC.currentTime);g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+.3);o.connect(g).connect(AC.destination);o.start();o.stop(AC.currentTime+.32);}catch(e){}}
+
+/* ---------- screen switching ---------- */
+const s1=document.getElementById('s1'), s2=document.getElementById('s2');
+function show(which){
+  s1.classList.toggle('on',which===1);
+  s2.classList.toggle('on',which===2);
+  window.scrollTo(0,0);
+}
+document.getElementById('toGame').onclick=()=>show(2);
+document.getElementById('backLink').onclick=(e)=>{e.preventDefault();show(1);};
+
+/* ---------- the game : Pour-fect Cocoa ---------- */
+const cv=document.getElementById('game'), ctx=cv.getContext('2d');
+let W=0,H=0,dpr=Math.min(window.devicePixelRatio||1,2);
+function resize(){
+  const r=cv.parentElement.getBoundingClientRect();
+  W=r.width; H=Math.max(300,Math.min(r.width*0.92,420));
+  cv.style.height=H+'px'; cv.width=W*dpr; cv.height=H*dpr;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+window.addEventListener('resize',resize); resize();
+
+const BEST_KEY='knoops_pour_best';
+let state={running:false,pouring:false,level:0,score:0,cups:0,streak:0,time:30,
+  cupPct:'65%', marsh:[], settleT:0, result:null, resultT:0};
+const PCTS=['28%','34%','43%','54%','65%','72%','85%'];
+const PERFECT_LO=0.80, PERFECT_HI=0.92, OVERFLOW=1.0, FILL_RATE=0.78;
+
+function cupGeo(){
+  const cx=W/2, rimY=H*0.30, baseY=H*0.84;
+  const rimW=Math.min(W*0.5,210), baseW=rimW*0.78;
+  return {cx,rimY,baseY,rimW,baseW,h:baseY-rimY};
+}
+function levelY(lv){const g=cupGeo();return g.baseY-lv*g.h;}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  const g=cupGeo();
+  // perfect band
+  const yLo=levelY(PERFECT_LO), yHi=levelY(PERFECT_HI);
+  ctx.fillStyle='rgba(201,162,75,.16)';
+  ctx.fillRect(g.cx-g.rimW/2-6,yHi,g.rimW+12,yLo-yHi);
+  ctx.strokeStyle='rgba(227,200,132,.8)';ctx.lineWidth=1.5;ctx.setLineDash([6,5]);
+  ctx.beginPath();ctx.moveTo(g.cx-g.rimW/2-6,(yLo+yHi)/2);ctx.lineTo(g.cx+g.rimW/2+6,(yLo+yHi)/2);ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='rgba(227,200,132,.75)';ctx.font='600 11px Jost, sans-serif';ctx.textAlign='left';
+  ctx.fillText('PERFECT %',g.cx+g.rimW/2-62,yHi-7);
+
+  // cup outline path
+  function cupPath(inset){
+    const rw=g.rimW/2-inset, bw=g.baseW/2-inset;
+    ctx.beginPath();
+    ctx.moveTo(g.cx-rw,g.rimY);
+    ctx.lineTo(g.cx+rw,g.rimY);
+    ctx.lineTo(g.cx+bw,g.baseY);
+    ctx.quadraticCurveTo(g.cx+bw,g.baseY+10,g.cx+bw-8,g.baseY+10);
+    ctx.lineTo(g.cx-bw+8,g.baseY+10);
+    ctx.quadraticCurveTo(g.cx-bw,g.baseY+10,g.cx-bw,g.baseY);
+    ctx.closePath();
+  }
+  // chocolate fill (clipped to cup)
+  ctx.save();cupPath(3);ctx.clip();
+  const lv=Math.min(state.level,OVERFLOW), fy=levelY(lv);
+  const grad=ctx.createLinearGradient(0,fy,0,g.baseY);
+  grad.addColorStop(0,'#6b4426');grad.addColorStop(1,'#2e1c10');
+  ctx.fillStyle=grad;
+  ctx.fillRect(g.cx-g.rimW/2,fy,g.rimW,g.baseY-fy+12);
+  // surface shimmer
+  ctx.fillStyle='rgba(120,80,48,.9)';
+  ctx.fillRect(g.cx-g.rimW/2,fy,g.rimW,3);
+  ctx.restore();
+
+  // cup glass
+  cupPath(0);ctx.fillStyle='rgba(251,246,238,.10)';ctx.fill();
+  ctx.lineWidth=3;ctx.strokeStyle='#e9dcc6';ctx.stroke();
+  // sleeve with %
+  const sy=g.rimY+g.h*0.55;
+  ctx.fillStyle='#241710';ctx.fillRect(g.cx-g.rimW*0.4,sy,g.rimW*0.8,30);
+  ctx.fillStyle='#e3c884';ctx.font='500 17px Fraunces, serif';ctx.textAlign='center';
+  ctx.fillText(state.cupPct+' Knoopsmas',g.cx,sy+20);
+
+  // pour stream
+  if(state.pouring){
+    ctx.fillStyle='rgba(90,58,34,.92)';
+    const sw=9;
+    ctx.fillRect(g.cx-sw/2,0,sw,fy);
+    // jug lip
+    ctx.fillStyle='#c9a24b';ctx.fillRect(g.cx-22,-2,44,10);
+    // droplet jitter
+    ctx.fillStyle='rgba(120,80,48,.9)';
+    ctx.beginPath();ctx.arc(g.cx+(Math.random()*6-3),fy,5,0,7);ctx.fill();
+  }
+  // marshmallows floating on perfect cups
+  state.marsh.forEach(m=>{
+    ctx.save();ctx.translate(m.x,m.y);ctx.rotate(m.r);
+    ctx.fillStyle='#fdfaf4';roundRect(-12,-8,24,16,6);ctx.fill();
+    ctx.strokeStyle='#e7d6bb';ctx.lineWidth=1;roundRect(-12,-8,24,16,6);ctx.stroke();
+    ctx.restore();
+  });
+  // steam if filled
+  if(lv>0.1 && !state.pouring){
+    ctx.strokeStyle='rgba(205,176,137,'+(0.25+0.15*Math.sin(Date.now()/400))+')';
+    ctx.lineWidth=2.5;ctx.beginPath();
+    for(let i=-1;i<2;i++){const x=g.cx+i*18;ctx.moveTo(x,fy-6);ctx.quadraticCurveTo(x-8,fy-22,x,fy-38);}
+    ctx.stroke();
+  }
+}
+function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+
+/* ---- loop ---- */
+let last=0;
+function loop(ts){
+  const dt=Math.min((ts-last)/1000||0,0.05);last=ts;
+  if(state.running){
+    if(state.pouring){state.level+=FILL_RATE*dt;
+      if(state.level>=OVERFLOW){ // auto-spill
+        state.pouring=false; evaluate(true);
+      }
+    }
+    // settle between cups
+    if(state.settleT>0){state.settleT-=dt; if(state.settleT<=0){resetCup();}}
+    // marsh bob
+    state.marsh.forEach(m=>{m.y+=Math.sin(Date.now()/300+m.x)*0.08;});
+  }
+  draw();
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+function resetCup(){
+  state.level=0; state.marsh=[];
+  state.cupPct=PCTS[Math.floor(Math.random()*PCTS.length)];
+}
+function addMarsh(){
+  const g=cupGeo(),fy=levelY(Math.min(state.level,OVERFLOW));
+  state.marsh=[{x:g.cx-10,y:fy-2,r:-0.2},{x:g.cx+12,y:fy-3,r:0.25}];
+}
+function toast(msg,good){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.color=good?'var(--gold-soft)':'#e6a79e';
+  t.style.borderColor=good?'var(--gold)':'#8c2b22';
+  t.classList.add('show');clearTimeout(toast._t);
+  toast._t=setTimeout(()=>t.classList.remove('show'),900);
+}
+
+function evaluate(spilled){
+  if(spilled){
+    state.streak=0; sadPlop(); toast('Overflow! No points',false);
+  } else {
+    const lv=state.level;
+    if(lv>=PERFECT_LO && lv<=PERFECT_HI){
+      state.streak++; const bonus=(state.streak-1)*5;
+      const pts=25+bonus; state.score+=pts;
+      addMarsh(); sparkleUp();
+      toast('Perfect pour! +'+pts+(bonus?(' (streak x'+state.streak+')'):''),true);
+    } else if(lv>0.55){
+      state.streak=0; state.score+=10; chime(784);
+      toast('A touch light · +10',true);
+    } else {
+      state.streak=0; state.score+=3; chime(660);
+      toast('Barely a sip · +3',true);
+    }
+  }
+  state.cups++;
+  state.settleT=0.7;
+  syncHud();
+}
+
+function syncHud(){
+  document.getElementById('hScore').textContent=state.score;
+  document.getElementById('hCups').textContent=state.cups;
+  document.getElementById('hStreak').textContent=state.streak;
+  document.getElementById('hTime').textContent=Math.ceil(state.time);
+  // meter + tiers
+  const pct=Math.min(100,state.score/240*100);
+  document.getElementById('meterFill').style.width=pct+'%';
+  document.getElementById('t1').classList.toggle('live',state.score>=120);
+  document.getElementById('t2').classList.toggle('live',state.score>=240);
+}
+
+/* ---- input ---- */
+function startPour(){
+  if(!state.running||state.settleT>0||state.pouring) return;
+  state.pouring=true;
+}
+function endPour(){
+  if(!state.running||!state.pouring) return;
+  state.pouring=false; evaluate(false);
+}
+cv.addEventListener('pointerdown',e=>{e.preventDefault();startPour();});
+window.addEventListener('pointerup',endPour);
+cv.addEventListener('pointercancel',endPour);
+document.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();startPour();}});
+document.addEventListener('keyup',e=>{if(e.code==='Space'){e.preventDefault();endPour();}});
+
+/* ---- round control ---- */
+let timer=null;
+document.getElementById('startBtn').onclick=startRound;
+function startRound(){
+  document.getElementById('startBtn').style.display='none';
+  document.getElementById('hint').style.display='block';
+  document.getElementById('voucher').classList.remove('on');
+  state.running=true;state.pouring=false;state.level=0;state.score=0;state.cups=0;state.streak=0;state.time=30;state.marsh=[];
+  resetCup();syncHud();
+  try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();}catch(e){}
+  clearInterval(timer);
+  timer=setInterval(()=>{
+    state.time-=0.1;
+    if(state.time<=0){state.time=0;finishRound();}
+    document.getElementById('hTime').textContent=Math.ceil(state.time);
+  },100);
+}
+function finishRound(){
+  clearInterval(timer);
+  state.running=false;state.pouring=false;
+  document.getElementById('hint').style.display='none';
+  const best=Math.max(state.score, +(localStorage.getItem(BEST_KEY)||0));
+  localStorage.setItem(BEST_KEY,best);
+  revealReward();
+  buildBoard();
+  // start overlay to replay
+  const sb=document.getElementById('startBtn');
+  sb.querySelector('.lbl').textContent='Play again';
+  sb.querySelector('.sub').textContent='You scored '+state.score+' — beat it for a bigger reward';
+  sb.style.display='flex';
+}
+
+function revealReward(){
+  const v=document.getElementById('voucher');
+  let title,desc,code;
+  if(state.score>=240){title='A free “The Winter Works”';desc='Our festive hero hot chocolate — gingerbread marshmallow, cream & flakes. On the house.';code='KNOOP-GOLD';}
+  else if(state.score>=120){title='£1 off any Knoopsmas drink + free cream';desc='Treat yourself to a Festive Spice or Candy Cane with cream on us.';code='KNOOP-SILVER';}
+  else {title='A free giant marshmallow topping';desc='The pillowy classic — perfect on any % hot chocolate.';code='KNOOP-MARSH';}
+  document.getElementById('vTitle').textContent=title;
+  document.getElementById('vDesc').textContent=desc;
+  document.getElementById('vCode').textContent=code+'-'+Math.floor(1000+Math.random()*9000);
+  v.classList.add('on');
+}
+
+/* ---- leaderboard ---- */
+let bonus=0;
+const RIVALS=[['Priya K.',305],['The Cocoa Club',288],['Marco T.',240],['Elin W.',205],['Dylan R.',168]];
+function buildBoard(){
+  const you=['You ('+CFG.firstName+')',state.score+bonus];
+  const all=RIVALS.concat([you]).sort((a,b)=>b[1]-a[1]);
+  const rows=document.getElementById('rows');rows.innerHTML='';
+  all.forEach((r,i)=>{
+    const d=document.createElement('div');
+    d.className='row'+(r===you?' you':'');
+    d.innerHTML='<div class="rk">'+(i+1)+'</div><div class="nm">'+r[0]+'</div><div class="sc">'+r[1]+'</div>';
+    rows.appendChild(d);
+  });
+}
+buildBoard();
+document.getElementById('challenge').onclick=function(){
+  bonus+=30;this.textContent='+30 bonus added! Share your link to add more →';
+  sparkleUp();buildBoard();
+};
+</script>
+</body>
+</html>
